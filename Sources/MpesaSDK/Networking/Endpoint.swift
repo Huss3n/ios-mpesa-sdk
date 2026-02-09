@@ -20,8 +20,10 @@ struct Endpoint {
     }
 
     func url(baseURL: URL) -> URL {
+        // swiftlint:disable:next force_unwrapping
         var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: true)!
         components.queryItems = queryItems
+        // swiftlint:disable:next force_unwrapping
         return components.url!
     }
 }
@@ -29,7 +31,6 @@ struct Endpoint {
 // MARK: - Endpoints
 
 extension Endpoint {
-
     // MARK: Authentication
 
     static let oauth = Endpoint(

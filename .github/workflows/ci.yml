@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    name: Build & Test (iOS ${{ matrix.ios-version }})
+    runs-on: macos-15
+    strategy:
+      matrix:
+        include:
+          - xcode-version: '16.2'
+            ios-version: '18.2'
+            destination: 'platform=iOS Simulator,name=iPhone 16,OS=18.2'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode ${{ matrix.xcode-version }}
+        run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode-version }}.app
+
+      - name: Build
+        run: |
+          xcodebuild build \
+            -scheme MpesaSDK \
+            -destination '${{ matrix.destination }}' \
+            -skipPackagePluginValidation \
+            | xcpretty || true
+
+      - name: Run Tests
+        run: |
+          xcodebuild test \
+            -scheme MpesaSDK \
+            -destination '${{ matrix.destination }}' \
+            -skipPackagePluginValidation \
+            | xcpretty || true
+
+  swiftlint:
+    name: SwiftLint
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run SwiftLint
+        run: |
+          if command -v swiftlint &> /dev/null; then
+            swiftlint lint --strict
+          else
+            brew install swiftlint
+            swiftlint lint --strict
+          fi

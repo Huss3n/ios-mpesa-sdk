@@ -29,7 +29,10 @@ public struct C2BValidationResponse: Encodable {
     }
 
     /// Creates a rejection response with a specific reason.
-    public static func reject(code: C2BValidationResultCode, description: String = "Rejected") -> C2BValidationResponse {
+    public static func reject(
+        code: C2BValidationResultCode,
+        description: String = "Rejected"
+    ) -> C2BValidationResponse {
         C2BValidationResponse(
             resultCode: code.rawValue,
             resultDesc: description
