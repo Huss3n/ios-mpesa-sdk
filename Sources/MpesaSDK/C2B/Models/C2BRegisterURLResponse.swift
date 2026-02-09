@@ -20,7 +20,13 @@ public struct C2BRegisterURLResponse: Decodable {
 
     /// Whether the registration was successful.
     public var isSuccessful: Bool {
-        responseCode == "0"
+        Int(responseCode) == 0
+    }
+
+    init(originatorConversationID: String, responseCode: String, responseDescription: String) {
+        self.originatorConversationID = originatorConversationID
+        self.responseCode = responseCode
+        self.responseDescription = responseDescription
     }
 
     enum CodingKeys: String, CodingKey {

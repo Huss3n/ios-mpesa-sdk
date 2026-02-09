@@ -156,6 +156,20 @@ final class C2BTests: XCTestCase {
         XCTAssertTrue(response.isSuccessful)
     }
 
+    func testRegisterURLResponseWithSandboxCode() throws {
+        let json = """
+        {
+            "OriginatorCoversationID": "sandbox-id-123",
+            "ResponseCode": "00000000",
+            "ResponseDescription": "Success"
+        }
+        """.data(using: .utf8)!
+
+        let response = try JSONDecoder().decode(C2BRegisterURLResponse.self, from: json)
+
+        XCTAssertTrue(response.isSuccessful)
+    }
+
     func testSimulateResponseDecoding() throws {
         let json = """
         {

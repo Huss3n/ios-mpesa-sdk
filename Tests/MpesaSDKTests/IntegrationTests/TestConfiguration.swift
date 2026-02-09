@@ -42,20 +42,22 @@ enum TestConfiguration {
         consumerKey != nil && consumerSecret != nil
     }
 
-    private static func loadEnvFile(into vars: inout [String: String]) {
+    private static func loadEnvFile(into vars: inout [String: String], filePath: String = #file) {
         let fileManager = FileManager.default
 
-        // Try to find .env file by walking up from current directory
-        var currentPath = fileManager.currentDirectoryPath
+        // Walk up from the source file location to find .env at the project root
+        var currentPath = (filePath as NSString).deletingLastPathComponent
 
-        for _ in 0..<5 {
+        for _ in 0..<10 {
             let envPath = (currentPath as NSString).appendingPathComponent(".env")
             if fileManager.fileExists(atPath: envPath),
                let contents = try? String(contentsOfFile: envPath, encoding: .utf8) {
                 parseEnvFile(contents, into: &vars)
                 return
             }
-            currentPath = (currentPath as NSString).deletingLastPathComponent
+            let parent = (currentPath as NSString).deletingLastPathComponent
+            if parent == currentPath { break }
+            currentPath = parent
         }
     }
 
