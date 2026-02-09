@@ -34,6 +34,15 @@ enum TestConfiguration {
         envVars["MPESA_SHORTCODE"] ?? "600984"
     }
 
+    static var stkPushShortCode: String {
+        envVars["MPESA_STK_SHORTCODE"] ?? "174379"
+    }
+
+    static var stkPushPassKey: String {
+        envVars["MPESA_STK_PASSKEY"]
+            ?? "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
+    }
+
     static var testMSISDN: String {
         envVars["MPESA_TEST_MSISDN"] ?? "254708374149"
     }

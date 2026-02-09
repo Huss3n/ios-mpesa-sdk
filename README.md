@@ -8,6 +8,7 @@ This SDK provides a modern, type-safe interface for M-Pesa payment integration o
 
 ## Features
 
+- **STK Push (Lipa Na M-Pesa)** - Initiate payment prompts on customer phones
 - **C2B (Customer to Business)** - Register callback URLs and receive payment notifications
 - OAuth 2.0 authentication with automatic token management
 - Sandbox and Production environment support

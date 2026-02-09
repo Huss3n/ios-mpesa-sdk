@@ -16,6 +16,9 @@ public final class Mpesa: Sendable {
     /// C2B (Customer to Business) service for receiving payments.
     public let c2b: C2BService
 
+    /// STK Push (Lipa Na M-Pesa) service for merchant-initiated payments.
+    public let stkPush: STKPushService
+
     /// Creates a new M-Pesa SDK instance.
     ///
     /// - Parameter configuration: The SDK configuration with credentials and environment.
@@ -24,6 +27,7 @@ public final class Mpesa: Sendable {
         self.apiClient = APIClient(baseURL: configuration.environment.baseURL)
         self.tokenManager = TokenManager(configuration: configuration, apiClient: apiClient)
         self.c2b = C2BService(apiClient: apiClient, tokenManager: tokenManager)
+        self.stkPush = STKPushService(apiClient: apiClient, tokenManager: tokenManager)
     }
 
     /// Creates a new M-Pesa SDK instance with individual parameters.

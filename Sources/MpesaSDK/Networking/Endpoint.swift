@@ -43,4 +43,8 @@ extension Endpoint {
 
     static let c2bRegisterURL = Endpoint(path: "mpesa/c2b/v2/registerurl")
     static let c2bSimulate = Endpoint(path: "mpesa/c2b/v2/simulate")
+
+    // MARK: STK Push
+
+    static let stkPush = Endpoint(path: "mpesa/stkpush/v1/processrequest")
 }
