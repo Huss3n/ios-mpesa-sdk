@@ -47,8 +47,20 @@ enum TestConfiguration {
         envVars["MPESA_TEST_MSISDN"] ?? "254708374149"
     }
 
+    static var b2cInitiator: String {
+        envVars["MPESA_B2C_INITIATOR"] ?? "testapi"
+    }
+
+    static var b2cSecurityCredential: String {
+        envVars["MPESA_B2C_SECURITY_CREDENTIAL"] ?? ""
+    }
+
     static var hasCredentials: Bool {
         consumerKey != nil && consumerSecret != nil
+    }
+
+    static var hasB2CCredentials: Bool {
+        !b2cSecurityCredential.isEmpty
     }
 
     private static func loadEnvFile(into vars: inout [String: String], filePath: String = #file) {

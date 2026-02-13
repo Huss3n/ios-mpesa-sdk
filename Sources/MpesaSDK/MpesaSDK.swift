@@ -19,6 +19,9 @@ public final class Mpesa: Sendable {
     /// STK Push (Lipa Na M-Pesa) service for merchant-initiated payments.
     public let stkPush: STKPushService
 
+    /// B2C Account Top Up service for loading funds into a B2C shortcode.
+    public let b2cTopUp: B2CTopUpService
+
     /// Creates a new M-Pesa SDK instance.
     ///
     /// - Parameter configuration: The SDK configuration with credentials and environment.
@@ -28,6 +31,7 @@ public final class Mpesa: Sendable {
         self.tokenManager = TokenManager(configuration: configuration, apiClient: apiClient)
         self.c2b = C2BService(apiClient: apiClient, tokenManager: tokenManager)
         self.stkPush = STKPushService(apiClient: apiClient, tokenManager: tokenManager)
+        self.b2cTopUp = B2CTopUpService(apiClient: apiClient, tokenManager: tokenManager)
     }
 
     /// Creates a new M-Pesa SDK instance with individual parameters.

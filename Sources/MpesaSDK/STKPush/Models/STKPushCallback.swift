@@ -71,57 +71,22 @@ public struct STKPushCallback: Decodable {
 
         /// The value as a String, if applicable.
         public var stringValue: String? {
-            if case .string(let val) = value { return val }
-            return nil
+            value?.stringValue
         }
 
         /// The value as an Int, if applicable.
         public var intValue: Int? {
-            if case .int(let val) = value { return val }
-            return nil
+            value?.intValue
         }
 
         /// The value as a Double, if applicable.
         public var doubleValue: Double? {
-            switch value {
-            case .double(let val):
-                return val
-            case .int(let val):
-                return Double(val)
-            default:
-                return nil
-            }
+            value?.doubleValue
         }
 
         enum CodingKeys: String, CodingKey {
             case name = "Name"
             case value = "Value"
-        }
-    }
-
-    /// A type-erased Codable value that can hold String, Int, or Double.
-    public enum AnyCodableValue: Decodable, Equatable {
-        case string(String)
-        case int(Int)
-        case double(Double)
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.singleValueContainer()
-            if let intVal = try? container.decode(Int.self) {
-                self = .int(intVal)
-            } else if let doubleVal = try? container.decode(Double.self) {
-                self = .double(doubleVal)
-            } else if let stringVal = try? container.decode(String.self) {
-                self = .string(stringVal)
-            } else {
-                throw DecodingError.typeMismatch(
-                    AnyCodableValue.self,
-                    DecodingError.Context(
-                        codingPath: decoder.codingPath,
-                        debugDescription: "Value is not String, Int, or Double"
-                    )
-                )
-            }
         }
     }
 

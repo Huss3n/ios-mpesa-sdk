@@ -47,4 +47,8 @@ extension Endpoint {
     // MARK: STK Push
 
     static let stkPush = Endpoint(path: "mpesa/stkpush/v1/processrequest")
+
+    // MARK: B2C Top Up
+
+    static let b2cTopUp = Endpoint(path: "mpesa/b2b/v1/paymentrequest")
 }
