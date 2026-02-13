@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-02-12
+
+### Added
+- B2C Account Top Up API support
+  - Load funds into a B2C shortcode utility account for disbursement
+  - Async result callback parsing with flexible decoding
+  - Handles array or single object for ResultParameters and ReferenceData
+  - Handles Int or String for ResultCode
+  - Computed helpers for amount, receipt, currency, charges, and more
+- Shared `AnyCodableValue` and `ResultParameter` types extracted from STK Push for reuse
+- B2C Account Top Up documentation (`Documentation/B2CTopUp.md`)
+- Unit tests, mock-based service tests, and sandbox integration tests for B2C Top Up
+- B2C initiator and security credential to test configuration
+
 ## [1.1.0] - 2026-02-10
 
 ### Added
