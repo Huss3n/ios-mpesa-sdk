@@ -8,7 +8,7 @@
 import Foundation
 
 /// M-Pesa API environment configuration.
-public enum MpesaEnvironment {
+public enum MpesaEnvironment: Sendable {
     case sandbox
     case production
 
