@@ -25,9 +25,12 @@ public final class Mpesa: Sendable {
     /// Creates a new M-Pesa SDK instance.
     ///
     /// - Parameter configuration: The SDK configuration with credentials and environment.
-    public init(configuration: MpesaConfiguration) {
+    public init(configuration: MpesaConfiguration) throws {
+		guard let baseURL = configuration.environment.baseURL else {
+			throw MpesaError.invalidBaseURL
+		}
         self.configuration = configuration
-        self.apiClient = APIClient(baseURL: configuration.environment.baseURL)
+        self.apiClient = APIClient(baseURL: baseURL)
         self.tokenManager = TokenManager(configuration: configuration, apiClient: apiClient)
         self.c2b = C2BService(apiClient: apiClient, tokenManager: tokenManager)
         self.stkPush = STKPushService(apiClient: apiClient, tokenManager: tokenManager)
@@ -44,13 +47,13 @@ public final class Mpesa: Sendable {
         consumerKey: String,
         consumerSecret: String,
         environment: MpesaEnvironment = .sandbox
-    ) {
+    ) throws {
         let config = MpesaConfiguration(
             consumerKey: consumerKey,
             consumerSecret: consumerSecret,
             environment: environment
         )
-        self.init(configuration: config)
+        try self.init(configuration: config)
     }
 }
 

@@ -35,7 +35,10 @@ final class APIClient: APIClientProtocol, Sendable {
         body: Encodable?,
         headers: [String: String]
     ) async throws -> T {
-        var request = URLRequest(url: endpoint.url(baseURL: baseURL))
+		guard let endPointURL = endpoint.url(baseURL: baseURL) else {
+			throw MpesaError.invalidBaseURL
+		}
+        var request = URLRequest(url: endPointURL)
         request.httpMethod = endpoint.method.rawValue
         request.timeoutInterval = 30
 

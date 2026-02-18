@@ -17,6 +17,7 @@ public enum MpesaError: LocalizedError {
     case apiError(code: String, message: String)
     case decodingError(Error)
     case unknown(String)
+	case invalidBaseURL
 
     public var errorDescription: String? {
         switch self {
@@ -36,6 +37,8 @@ public enum MpesaError: LocalizedError {
             return "Decoding error: \(error.localizedDescription)"
         case .unknown(let message):
             return "Unknown error: \(message)"
+		case .invalidBaseURL:
+			return "Invalid base URL"
         }
     }
 }

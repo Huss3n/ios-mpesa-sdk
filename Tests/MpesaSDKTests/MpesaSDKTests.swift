@@ -34,17 +34,17 @@ final class MpesaSDKTests: XCTestCase {
 
     func testEnvironmentBaseURLs() {
         XCTAssertEqual(
-            MpesaEnvironment.sandbox.baseURL.absoluteString,
+			MpesaEnvironment.sandbox.baseURL?.absoluteString,
             "https://sandbox.safaricom.co.ke"
         )
         XCTAssertEqual(
-            MpesaEnvironment.production.baseURL.absoluteString,
+            MpesaEnvironment.production.baseURL?.absoluteString,
             "https://api.safaricom.co.ke"
         )
     }
 
-    func testMpesaInitialization() {
-        let mpesa = Mpesa(
+    func testMpesaInitialization() throws {
+        let mpesa = try Mpesa(
             consumerKey: "testKey",
             consumerSecret: "testSecret",
             environment: .sandbox

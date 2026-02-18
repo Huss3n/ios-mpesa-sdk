@@ -11,33 +11,16 @@ import XCTest
 /// Integration tests for OAuth authentication.
 /// These tests hit the actual M-Pesa sandbox API.
 final class AuthIntegrationTests: XCTestCase {
-
-    var mpesa: Mpesa!
-
-    override func setUp() {
-        super.setUp()
-
-        guard TestConfiguration.hasCredentials,
-              let key = TestConfiguration.consumerKey,
-              let secret = TestConfiguration.consumerSecret else {
-            return
-        }
-
-        mpesa = Mpesa(
-            consumerKey: key,
-            consumerSecret: secret,
-            environment: .sandbox
-        )
-    }
-
-    override func tearDown() {
-        mpesa = nil
-        super.tearDown()
-    }
-
     func testAuthenticationSuccess() async throws {
         try skipIfNoCredentials()
 
+		let key = try XCTUnwrap(TestConfiguration.consumerKey)
+		let secret = try XCTUnwrap(TestConfiguration.consumerSecret)
+		let mpesa = try Mpesa(
+			consumerKey: key,
+			consumerSecret: secret,
+			environment: .sandbox
+		)
         // The C2B service will internally authenticate
         // If this doesn't throw, auth worked
         let response = try await mpesa.c2b.registerURLs(
@@ -51,8 +34,8 @@ final class AuthIntegrationTests: XCTestCase {
         XCTAssertNotNil(response.originatorConversationID)
     }
 
-    func testInvalidCredentialsFails() async {
-        let invalidMpesa = Mpesa(
+    func testInvalidCredentialsFails() async throws {
+        let invalidMpesa = try Mpesa(
             consumerKey: "invalid_key",
             consumerSecret: "invalid_secret",
             environment: .sandbox
@@ -68,7 +51,12 @@ final class AuthIntegrationTests: XCTestCase {
             XCTFail("Expected authentication to fail")
         } catch {
             // Expected - invalid credentials should fail
-            XCTAssertTrue(true)
+			guard case .serverError(let statusCode, let message) = error as? MpesaError else {
+				XCTFail("Expected MpesaError.invalidConfiguration")
+				return
+			}
+            XCTAssertEqual(statusCode, 400)
+			XCTAssertEqual(message, "")
         }
     }
 

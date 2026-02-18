@@ -17,8 +17,8 @@ final class C2BIntegrationTests: XCTestCase {
 
     var mpesa: Mpesa!
 
-    override func setUp() {
-        super.setUp()
+	override func setUpWithError() throws {
+		try super.setUpWithError()
 
         guard TestConfiguration.hasCredentials,
               let key = TestConfiguration.consumerKey,
@@ -26,16 +26,16 @@ final class C2BIntegrationTests: XCTestCase {
             return
         }
 
-        mpesa = Mpesa(
+        mpesa = try Mpesa(
             consumerKey: key,
             consumerSecret: secret,
             environment: .sandbox
         )
     }
 
-    override func tearDown() {
-        mpesa = nil
-        super.tearDown()
+	override func tearDownWithError() throws {
+		mpesa = nil
+		try super.tearDownWithError()
     }
 
     // MARK: - Register URL Tests

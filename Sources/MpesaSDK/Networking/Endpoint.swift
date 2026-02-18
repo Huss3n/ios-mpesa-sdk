@@ -19,12 +19,10 @@ struct Endpoint {
         self.queryItems = queryItems
     }
 
-    func url(baseURL: URL) -> URL {
-        // swiftlint:disable:next force_unwrapping
-        var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: true)!
-        components.queryItems = queryItems
-        // swiftlint:disable:next force_unwrapping
-        return components.url!
+    func url(baseURL: URL) -> URL? {
+        var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: true)
+        components?.queryItems = queryItems
+        return components?.url
     }
 }
 

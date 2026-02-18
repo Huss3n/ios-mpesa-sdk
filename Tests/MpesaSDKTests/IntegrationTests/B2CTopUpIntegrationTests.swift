@@ -18,26 +18,25 @@ final class B2CTopUpIntegrationTests: XCTestCase {
 
     var mpesa: Mpesa!
 
-    override func setUp() {
-        super.setUp()
-
-        guard TestConfiguration.hasCredentials,
-              let key = TestConfiguration.consumerKey,
-              let secret = TestConfiguration.consumerSecret else {
-            return
-        }
-
-        mpesa = Mpesa(
-            consumerKey: key,
-            consumerSecret: secret,
-            environment: .sandbox
-        )
-    }
-
-    override func tearDown() {
-        mpesa = nil
-        super.tearDown()
-    }
+	override func setUpWithError() throws {
+		try super.setUpWithError()
+		guard TestConfiguration.hasCredentials,
+			  let key = TestConfiguration.consumerKey,
+			  let secret = TestConfiguration.consumerSecret else {
+			return
+		}
+		
+		mpesa = try Mpesa(
+			consumerKey: key,
+			consumerSecret: secret,
+			environment: .sandbox
+		)
+	}
+	
+	override func tearDownWithError() throws {
+		mpesa = nil
+		try super.tearDownWithError()
+	}
 
     // MARK: - B2C Top Up Tests
 
