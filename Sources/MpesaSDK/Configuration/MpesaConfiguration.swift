@@ -8,7 +8,7 @@
 import Foundation
 
 /// Configuration for the M-Pesa SDK.
-public struct MpesaConfiguration {
+public struct MpesaConfiguration: Sendable {
     public let consumerKey: String
     public let consumerSecret: String
     public let environment: MpesaEnvironment
