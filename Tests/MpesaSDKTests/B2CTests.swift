@@ -16,7 +16,7 @@ final class B2CTests: XCTestCase {
         let request = B2CRequest(
             originatorConversationID: "600997_Test_32et3241ed8yu",
             initiatorName: "testapi",
-            securityCredential: "RC6E9WDxXR4b9X2c6z3gp0oC5Th==",
+            securityCredential: "testEncryptedCredential123",
             commandID: .businessPayment,
             amount: 10,
             partyA: "600992",
@@ -38,7 +38,7 @@ final class B2CTests: XCTestCase {
         XCTAssertEqual(json["InitiatorName"] as? String, "testapi")
         XCTAssertEqual(
             json["SecurityCredential"] as? String,
-            "RC6E9WDxXR4b9X2c6z3gp0oC5Th=="
+            "testEncryptedCredential123"
         )
         XCTAssertEqual(json["CommandID"] as? String, "BusinessPayment")
         XCTAssertEqual(json["Amount"] as? String, "10")
