@@ -10,6 +10,8 @@ This SDK provides a modern, type-safe interface for M-Pesa payment integration o
 
 - **STK Push (Lipa Na M-Pesa)** - Initiate payment prompts on customer phones
 - **C2B (Customer to Business)** - Register callback URLs and receive payment notifications
+- **B2C (Business to Customer)** - Send payments to customer M-PESA numbers (Bulk Disbursements)
+- **B2C Account Top Up** - Load funds into B2C shortcode utility accounts
 - OAuth 2.0 authentication with automatic token management
 - Sandbox and Production environment support
 - Async/await API design
@@ -119,6 +121,54 @@ let acceptResponse = C2BValidationResponse.accept()
 
 // Or reject with a reason
 let rejectResponse = C2BValidationResponse.rejectInvalidAccountNumber()
+```
+
+## B2C (Business to Customer)
+
+The B2C API enables businesses to send payments to customers' M-PESA numbers (Bulk Disbursements).
+
+### Send a Payment
+
+```swift
+do {
+    let response = try await mpesa.b2c.payment(
+        originatorConversationID: "unique_request_id",
+        initiatorName: "testapi",
+        securityCredential: "your_encrypted_credential",
+        commandID: .businessPayment,
+        amount: 100,
+        partyA: "600992",
+        partyB: "254705912645",
+        resultURL: URL(string: "https://example.com/b2c/result")!,
+        queueTimeOutURL: URL(string: "https://example.com/b2c/timeout")!
+    )
+
+    if response.isSuccessful {
+        print("Request accepted: \(response.conversationID)")
+    }
+} catch {
+    print("Payment failed: \(error)")
+}
+```
+
+### Handle Result Callbacks
+
+```swift
+let resultData: Data = // ... received from M-Pesa
+
+do {
+    let result = try B2CService.parseResult(from: resultData)
+
+    if result.isSuccessful {
+        print("Receipt: \(result.transactionReceipt ?? "")")
+        print("Amount: \(result.transactionAmount ?? 0)")
+        print("Receiver: \(result.receiverPartyPublicName ?? "")")
+    } else {
+        print("Failed (\(result.resultCode)): \(result.resultDesc)")
+    }
+} catch {
+    print("Failed to parse result: \(error)")
+}
 ```
 
 ## Error Handling

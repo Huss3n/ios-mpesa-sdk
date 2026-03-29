@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-03-29
+
+### Added
+- B2C (Business to Customer) payment API support
+  - Send payments from a business shortcode to customer M-PESA numbers
+  - Supports SalaryPayment, BusinessPayment, and PromotionPayment command types
+  - OriginatorConversationID for duplicate disbursement prevention
+  - Async result callback parsing with flexible decoding
+  - 13 typed result codes covering all documented B2C error scenarios
+  - Computed helpers for transaction amount, receipt, receiver name, completion time, and account balances
+  - Handles array or single object for ResultParameters and ReferenceData
+  - Handles Int or String for ResultCode
+- B2C documentation (`Documentation/B2C.md`)
+- Unit tests, mock-based service tests, and sandbox integration tests for B2C
+
 ## [1.2.0] - 2026-02-12
 
 ### Added
