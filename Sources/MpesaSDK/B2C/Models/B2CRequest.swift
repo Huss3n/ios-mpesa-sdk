@@ -46,7 +46,6 @@ public struct B2CRequest: Encodable, Sendable {
     /// Additional information sent with the request. 1–100 characters. Optional.
     public let occasion: String?
 
-    // swiftlint:disable function_parameter_count
     public init(
         originatorConversationID: String,
         initiatorName: String,
@@ -60,7 +59,6 @@ public struct B2CRequest: Encodable, Sendable {
         queueTimeOutURL: URL,
         occasion: String? = nil
     ) {
-    // swiftlint:enable function_parameter_count
         self.originatorConversationID = originatorConversationID
         self.initiatorName = initiatorName
         self.securityCredential = securityCredential
